@@ -11,6 +11,15 @@ def emotion_detector(text_to_analyze):
     myobj = { "raw_document": { "text": text_to_analyze } }
     response = requests.post(url, json = myobj, headers=header, timeout=10)
     formatted_response = json.loads(response.text)
+    if response.status_code == 400:
+        return {
+            "anger": None,
+            "disgust": None,
+            "fear": None,
+            "joy": None,
+            "sadness": None,
+            "dominant_emotion": None
+            }
     # extract the emotions to the still incomplete output dictionary
     out_dict = formatted_response['emotionPredictions'][0]['emotion']
     # the key of the max score is the value we need to append to complete the output dictionary

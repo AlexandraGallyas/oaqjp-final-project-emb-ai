@@ -11,6 +11,8 @@ def emotion_detect():
     '''Run emotion detection on text from html request'''
     text_to_analyze = request.args.get("textToAnalyze")
     response = emotion_detector(text_to_analyze)
+    if response['dominant_emotion'] is None:
+        return "<b>Invalid text! Please try again!</b>"
     split_response = str(response).replace('{','').replace('}','').split(",")
     str_out = "For the given statement, the system response is "
     str_out = str_out + ','.join(split_response[:-2])
